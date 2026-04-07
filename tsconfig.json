@@ -2,6 +2,9 @@
   "extends": ["@tsconfig/strictest/tsconfig.json"],
   "include": ["src/**/*"],
   "compilerOptions": {
+    "types": ["@types/node", "@jest/types"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "rootDir": "src",
     "outDir": "dist",
     "skipLibCheck": false
