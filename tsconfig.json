@@ -2,6 +2,7 @@
   "extends": ["@tsconfig/strictest/tsconfig.json"],
   "include": ["src/**/*"],
   "compilerOptions": {
+    "types": ["@types/node"],
     "rootDir": "src",
     "outDir": "dist",
     "skipLibCheck": false
