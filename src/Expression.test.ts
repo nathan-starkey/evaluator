@@ -1,14 +1,14 @@
 import { describe, it } from "node:test";
-import { Term } from "./Term.js";
+import { Sign, Term } from "./Term.js";
 import { Expression } from "./Expression.js";
 import assert from "node:assert/strict";
 
 describe("Expression", () => {
   describe("combineTerms()", () => {
     it("provides each term exactly once", () => {
-      const termA = new Term();
-      const termB = new Term();
-      const termC = new Term();
+      const termA = new Term(Sign.Positive, []);
+      const termB = new Term(Sign.Positive, []);
+      const termC = new Term(Sign.Positive, []);
 
       const terms = Expression.combineTerms([
         termA,
