@@ -1,4 +1,5 @@
 import type { IExpression, ISum, ISummand } from "../types";
+import { otherIsContainedIn } from "./utils.js";
 
 export class Sum implements ISum {
   get summands(): readonly ISummand[] {
@@ -6,10 +7,23 @@ export class Sum implements ISum {
   }
 
   isEqualTo(other: IExpression): boolean {
-    throw new Error("Method not implemented.");
+    return (
+      other instanceof Sum &&
+      this.summands.length == other.summands.length &&
+      this.summands.every(otherIsContainedIn(other.summands))
+    );
   }
 
   normalise(): IExpression {
-    throw new Error("Method not implemented.");
+    if (this.summands.length == 0) {
+      // TODO: Return the 'zero' constant.
+      throw new Error("Case not implemented.");
+    }
+
+    if (this.summands.length == 1) {
+      return this.summands[0]!;
+    }
+
+    return this;
   }
 }
