@@ -1,4 +1,5 @@
 import type { IConstant, IExpression, IFactor, IProduct } from "../types";
+import { otherIsContainedIn } from "./utils";
 
 export class Product implements IProduct {
   get coefficient(): IConstant {
@@ -14,10 +15,23 @@ export class Product implements IProduct {
   }
 
   isEqualTo(other: IExpression): boolean {
-    throw new Error("Method not implemented.");
+    return (
+      other instanceof Product &&
+      this.factors.length == other.factors.length &&
+      this.factors.every(otherIsContainedIn(other.factors))
+    );
   }
 
   normalise(): IExpression {
-    throw new Error("Method not implemented.");
+    if (this.factors.length == 0) {
+      // TODO: Return the 'one' constant.
+      throw new Error("Case not implemented.");
+    }
+
+    if (this.factors.length == 1) {
+      return this.factors[0]!;
+    }
+
+    return this;
   }
 }
