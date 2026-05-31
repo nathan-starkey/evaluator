@@ -1,16 +1,36 @@
 import type { IConstant, IExpression } from "../types";
 
-export class Constant implements IConstant {
-  static readonly ZERO = new Constant(0, 1);
-  static readonly ONE = new Constant(1, 1);
+export enum Sign {
+  NEGATIVE = -1,
+  ZERO = 0,
+  POSITIVE = 1,
+}
 
+export class Constant implements IConstant {
+  static readonly ZERO = Constant.integer(0);
+  static readonly ONE = Constant.integer(1);
+
+  static fraction(numerator: number, denominator: number) {
+    const sign = Math.sign(numerator * denominator) as Sign;
+    const absNum = Math.abs(numerator);
+    const absDenom = Math.abs(denominator);
+
+    return new Constant(sign, absNum, absDenom);
+  }
+
+  static integer(value: number) {
+    return this.fraction(value, 1);
+  }
+
+  readonly sign: Sign;
   readonly numerator: number;
   readonly denominator: number;
 
   readonly coefficient = this;
   readonly product = Constant.ONE;
 
-  constructor(numerator: number, denominator: number) {
+  private constructor(sign: Sign, numerator: number, denominator: number) {
+    this.sign = sign;
     this.numerator = numerator;
     this.denominator = denominator;
   }
