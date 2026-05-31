@@ -10,10 +10,24 @@ export class Summand implements ISummand {
   }
 
   isEqualTo(other: IExpression): boolean {
-    throw new Error("Method not implemented.");
+    return (
+      other instanceof Summand &&
+      this.numerator == other.numerator &&
+      this.denominator == other.denominator &&
+      this.product.isEqualTo(other.product)
+    );
   }
 
   normalise(): IExpression {
-    throw new Error("Method not implemented.");
+    if (this.numerator == 0) {
+      // TODO: Return the 'zero' constant.
+      throw new Error("Case not implemented.");
+    }
+
+    if (this.numerator == 1 && this.denominator == 1) {
+      return this.product;
+    }
+
+    return this;
   }
 }
