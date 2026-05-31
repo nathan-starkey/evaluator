@@ -1,30 +1,29 @@
 import type { IConstant, IExpression, IProduct, ISummand } from "../types";
+import { Constant } from "./Constant";
 
 export class Summand implements ISummand {
-  get coefficient(): IConstant {
-    throw new Error("Method not implemented.");
-  }
+  readonly coefficient: IConstant;
+  readonly product: IProduct;
 
-  get product(): IProduct {
-    throw new Error("Method not implemented.");
+  constructor(coefficient: IConstant, product: IProduct) {
+    this.coefficient = coefficient;
+    this.product = product;
   }
 
   isEqualTo(other: IExpression): boolean {
     return (
       other instanceof Summand &&
-      this.numerator == other.numerator &&
-      this.denominator == other.denominator &&
+      this.coefficient.isEqualTo(other.coefficient) &&
       this.product.isEqualTo(other.product)
     );
   }
 
   normalise(): IExpression {
-    if (this.numerator == 0) {
-      // TODO: Return the 'zero' constant.
-      throw new Error("Case not implemented.");
+    if (this.coefficient == Constant.ZERO) {
+      return Constant.ZERO;
     }
 
-    if (this.numerator == 1 && this.denominator == 1) {
+    if (this.coefficient == Constant.ONE) {
       return this.product;
     }
 
