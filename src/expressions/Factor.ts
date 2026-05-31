@@ -29,10 +29,16 @@ export class Factor implements IFactor {
   }
 
   isEqualTo(other: IExpression): boolean {
-    throw new Error("Method not implemented.");
+    return (
+      other instanceof Factor &&
+      this.base.isEqualTo(other.base) &&
+      this.exponent.isEqualTo(other.exponent)
+    );
   }
 
   normalise(): IExpression {
-    throw new Error("Method not implemented.");
+    // TODO: Implement procedure as covered by the flow chart.
+
+    return this;
   }
 }
