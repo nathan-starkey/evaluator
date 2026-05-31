@@ -1,23 +1,37 @@
-import type { IConstant, IExpression, IProduct } from "../types";
+import type { IConstant, IExpression } from "../types";
 
 export class Constant implements IConstant {
-  get numerator(): number {
-    throw new Error("Method not implemented.");
-  }
+  static readonly ZERO = new Constant(0, 1);
+  static readonly ONE = new Constant(1, 1);
 
-  get denominator(): number {
-    throw new Error("Method not implemented.");
-  }
+  readonly numerator: number;
+  readonly denominator: number;
 
-  get product(): IProduct {
-    throw new Error("Method not implemented.");
+  readonly coefficient = this;
+  readonly product = Constant.ONE;
+
+  constructor(numerator: number, denominator: number) {
+    this.numerator = numerator;
+    this.denominator = denominator;
   }
 
   isEqualTo(other: IExpression): boolean {
-    throw new Error("Method not implemented.");
+    return (
+      other instanceof Constant &&
+      this.numerator == other.numerator &&
+      this.denominator == other.denominator
+    );
   }
 
   normalise(): IExpression {
-    throw new Error("Method not implemented.");
+    if (this.numerator == 0) {
+      return Constant.ZERO;
+    }
+
+    if (this.numerator == 1 && this.denominator == 1) {
+      return Constant.ONE;
+    }
+
+    return this;
   }
 }
